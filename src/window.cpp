@@ -50,4 +50,16 @@ namespace s2 {
         return true;
     }
 
+
+    const std::string& window::title() const noexcept {
+        return this->_title;
+    }
+
+    int window::width() const noexcept {
+        return this->_width;
+    }
+
+    int window::height() const noexcept {
+        return this->_height;
+    }
 }

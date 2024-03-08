@@ -25,6 +25,10 @@ namespace s2 {
                               const int _h);
         bool create() noexcept;
 
+        const std::string& title() const noexcept;
+        int width() const noexcept;
+        int height() const noexcept;
+
         window& operator= (const window& _win) = delete;
     private:
         SDL_Window* _window;
