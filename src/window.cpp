@@ -23,4 +23,31 @@ namespace s2 {
         SDL_QuitSubSystem(sdl_enabled_systems);
         SDL_Quit();
     }
+
+    bool window::create(const std::string& _title,
+                          const int _w,
+                          const int _h) {
+        this->_title = _title;
+        this->_width = _w;
+        this->_height = _h;
+        return this->create();
+    }
+
+    bool window::create() noexcept {
+        if(SDL_InitSubSystem(sdl_enabled_systems) < 0) return false;
+
+        this->_window = SDL_CreateWindow(this->_title.c_str(),
+                                         this->_width,
+                                         this->_height,
+                                         SDL_WINDOW_HIDDEN);
+        if(!this->_window) return false;
+
+        this->_renderer = SDL_CreateRenderer(this->_window,
+                                             NULL,
+                                             SDL_RENDERER_PRESENTVSYNC);
+        if(!this->_renderer) return false;
+
+        return true;
+    }
+
 }

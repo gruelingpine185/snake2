@@ -20,6 +20,11 @@ namespace s2 {
         window() noexcept;
         ~window() noexcept;
 
+        bool create(const std::string& _title,
+                              const int _w,
+                              const int _h);
+        bool create() noexcept;
+
         window& operator= (const window& _win) = delete;
     private:
         SDL_Window* _window;
