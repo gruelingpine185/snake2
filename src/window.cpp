@@ -1,6 +1,7 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_render.h>
+#include <SDL3/SDL_events.h>
 
 #include "window.h"
 
@@ -50,6 +51,24 @@ namespace s2 {
         return true;
     }
 
+    bool window::show() noexcept {
+        return (SDL_ShowWindow(this->_window) < 0);
+    }
+
+    bool window::hide() noexcept {
+        return (SDL_HideWindow(this->_window) < 0);
+    }
+
+    bool window::should_close() noexcept {
+        return this->_should_close;
+    }
+
+    void window::handle_events(const SDL_Event& _event) noexcept {
+        switch(_event.type) {
+            case SDL_EVENT_QUIT: this->_should_close = true; break;
+            default: break;
+        }
+    }
 
     const std::string& window::title() const noexcept {
         return this->_title;

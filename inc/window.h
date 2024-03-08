@@ -24,6 +24,10 @@ namespace s2 {
                               const int _w,
                               const int _h);
         bool create() noexcept;
+        bool show() noexcept;
+        bool hide() noexcept;
+        bool should_close() noexcept;
+        void handle_events(const SDL_Event& _event) noexcept;
 
         const std::string& title() const noexcept;
         int width() const noexcept;
