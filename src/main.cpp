@@ -7,8 +7,8 @@
 
 int main() {
     const std::string title = "Snake 2";
-    constexpr int width = 1280 - (1280 / 4);
-    constexpr int height = 720 - (720 / 4);
+    constexpr int width = 800;
+    constexpr int height = 600;
 
     s2::window win(title, width, height);
     if(!win.create()) return 1;
