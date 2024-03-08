@@ -52,11 +52,11 @@ namespace s2 {
     }
 
     bool window::show() noexcept {
-        return (SDL_ShowWindow(this->_window) < 0);
+        return (SDL_ShowWindow(this->_window) == 0);
     }
 
     bool window::hide() noexcept {
-        return (SDL_HideWindow(this->_window) < 0);
+        return (SDL_HideWindow(this->_window) == 0);
     }
 
     bool window::should_close() noexcept {
