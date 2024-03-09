@@ -20,6 +20,8 @@ int main() {
         while(SDL_PollEvent(&event)) {
             win.handle_events(event);
         }
+
+        win.render();
     }
 
     return 0;
