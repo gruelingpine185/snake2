@@ -30,6 +30,7 @@ namespace s2 {
         bool clear() noexcept;
         bool render() noexcept;
         void handle_events(const SDL_Event& _event) noexcept;
+        SDL_Renderer*& renderer() noexcept;
 
         const std::string& title() const noexcept;
         int width() const noexcept;

@@ -82,6 +82,10 @@ namespace s2 {
         }
     }
 
+    SDL_Renderer*& window::renderer() noexcept {
+        return this->_renderer;
+    }
+
     const std::string& window::title() const noexcept {
         return this->_title;
     }
