@@ -25,6 +25,10 @@ namespace s2 {
         T y() const noexcept;
         void set_x(const T _x) const noexcept;
         void set_y(const T _y) const noexcept;
+
+        pos& operator= (const pos& _pos) noexcept;
+        pos& operator+= (const pos& _r) noexcept;
+        pos& operator-= (const pos& _r) noexcept;
     private:
         T _x;
         T _y;

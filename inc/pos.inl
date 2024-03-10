@@ -39,4 +39,27 @@ namespace s2 {
     void pos<T>::set_y(const T _y) const noexcept {
         this->_y = _y;
     }
+
+    template <typename T>
+    pos<T>& pos<T>::operator= (const pos& _pos) noexcept {
+        if(*this == _pos) return *this;
+
+        this->_x = _pos._x;
+        this->_y = _pos._y;
+        return *this;
+    }
+
+    template <typename T>
+    pos<T>& pos<T>::operator+= (const pos& _r) noexcept {
+        this->_x += _r._x;
+        this->_y += _r._y;
+        return *this;
+    }
+
+    template <typename T>
+    pos<T>& pos<T>::operator-= (const pos& _r) noexcept {
+        this->_x -= _r._x;
+        this->_y -= _r._y;
+        return *this;
+    }
 }
