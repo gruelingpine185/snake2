@@ -20,6 +20,11 @@ namespace s2 {
         pos(const pos& _pos) noexcept;
         pos() noexcept;
         ~pos() noexcept;
+
+        T x() const noexcept;
+        T y() const noexcept;
+        void set_x(const T _x) const noexcept;
+        void set_y(const T _y) const noexcept;
     private:
         T _x;
         T _y;

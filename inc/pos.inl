@@ -19,4 +19,24 @@ namespace s2 {
 
     template <typename T>
     pos<T>::~pos() noexcept {}
+
+    template <typename T>
+    T pos<T>::x() const noexcept {
+        return this->_x;
+    }
+
+    template <typename T>
+    T pos<T>::y() const noexcept {
+        return this->_y;
+    }
+
+    template <typename T>
+    void pos<T>::set_x(const T _x) const noexcept {
+        this->_x = _x;
+    }
+    
+    template <typename T>
+    void pos<T>::set_y(const T _y) const noexcept {
+        this->_y = _y;
+    }
 }
