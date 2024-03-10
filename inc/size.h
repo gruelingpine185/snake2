@@ -25,7 +25,12 @@ namespace s2 {
         T h() const noexcept;
         void set_w(const T _w) noexcept;
         void set_h(const T _h) noexcept;
+
+        size& operator= (const size& _size) noexcept;
+        friend bool operator== (const size& _l, const size& _r) noexcept;
+        friend bool operator!= (const size& _l, const size& _r) noexcept;
     private:
         T _w;
         T _h;
     };
+}

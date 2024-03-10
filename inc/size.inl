@@ -39,4 +39,23 @@ namespace s2 {
     void size<T>::set_h(const T _h) noexcept {
         this->_h = _h;
     }
+
+    template <typename T>
+    size<T>& size<T>::operator= (const size& _size) noexcept {
+        if(*this == _size) return *this;
+
+        this->_w = _size._w;
+        this->_h = _size._h;
+        return *this;
+    }
+
+    template <typename T>
+    bool operator== (const size<T>& _l, const size<T>& _r) noexcept {
+        return ((_l._w == _r._w) && (_l._h == _r._h));
+    }
+
+    template <typename T>
+    bool operator!= (const size<T>& _l, const size<T>& _r) noexcept {
+        return (!(_l == _r));
+    }
 }
