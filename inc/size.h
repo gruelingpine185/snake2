@@ -1,0 +1,26 @@
+#pragma once
+
+
+#include <type_traits>
+
+
+namespace s2 {
+    template <
+        typename T,
+        typename = typename std::enable_if_t<std::is_arithmetic_v<T>>
+    >
+    class size;
+
+
+    template <typename T>
+    class size<T> {
+    public:
+        size(const T _w, T _h) noexcept;
+        size(const T _n) noexcept;
+        size(const size& _size) noexcept;
+        size() noexcept;
+        ~size() noexcept;
+    private:
+        T _w;
+        T _h;
+    };
