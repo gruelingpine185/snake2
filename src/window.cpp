@@ -63,15 +63,16 @@ namespace s2 {
         return this->_should_close;
     }
 
-    bool window::render() noexcept {
+    bool window::clear() noexcept {
         if(SDL_SetRenderDrawColor(this->_renderer, 0x24, 0x24, 0x24, 0xff) < 0) {
             return false;
         }
 
-        if(SDL_RenderClear(this->_renderer) < 0) return false;
-        if(SDL_RenderPresent(this->_renderer) < 0) return false;
+        return (SDL_RenderClear(this->_renderer) == 0);
+    }
 
-        return true;
+    bool window::render() noexcept {
+        return (SDL_RenderPresent(this->_renderer) == 0);
     }
 
     void window::handle_events(const SDL_Event& _event) noexcept {

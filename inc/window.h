@@ -27,6 +27,7 @@ namespace s2 {
         bool show() noexcept;
         bool hide() noexcept;
         bool should_close() noexcept;
+        bool clear() noexcept;
         bool render() noexcept;
         void handle_events(const SDL_Event& _event) noexcept;
 
