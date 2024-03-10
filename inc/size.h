@@ -20,6 +20,11 @@ namespace s2 {
         size(const size& _size) noexcept;
         size() noexcept;
         ~size() noexcept;
+
+        T w() const noexcept;
+        T h() const noexcept;
+        void set_w(const T _w) noexcept;
+        void set_h(const T _h) noexcept;
     private:
         T _w;
         T _h;
