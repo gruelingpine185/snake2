@@ -26,6 +26,9 @@ namespace s2 {
               const float _vel) noexcept;
         ~snake() noexcept;
 
+        void handle_events(const SDL_Event& _event) noexcept;
+        bool render(SDL_Renderer* _renderer) const noexcept;
+        void update(const float _dt) noexcept;
         s2::size<float> size() const noexcept;
         pos<float> pos() const noexcept;
         s2::dir dir() const noexcept;
