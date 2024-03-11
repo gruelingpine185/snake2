@@ -27,8 +27,11 @@ namespace s2 {
         void set_h(const T _h) noexcept;
 
         size& operator= (const size& _size) noexcept;
-        friend bool operator== (const size& _l, const size& _r) noexcept;
-        friend bool operator!= (const size& _l, const size& _r) noexcept;
+
+        template <typename>
+        friend bool operator== (const size<T>& _l, const size<T>& _r) noexcept;
+        template <typename>
+        friend bool operator!= (const size<T>& _l, const size<T>& _r) noexcept;
     private:
         T _w;
         T _h;
