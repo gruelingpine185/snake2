@@ -7,6 +7,52 @@
 
 
 namespace s2 {
+    static bool draw_dir(SDL_Renderer* _renderer, const snake _s);
+
+
+    static bool draw_dir(SDL_Renderer* _renderer, const snake _s) {
+        if(SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0x00, 0xff) < 0) {
+            return false;
+        }
+
+        int res;
+        switch(_s.dir()) {
+            case dir::up:
+                res = SDL_RenderLine(_renderer,
+                                     _s.pos().x() + (_s.size().w() / 2) - 0.5f,
+                                     _s.pos().y(),
+                                     _s.pos().x() + (_s.size().w() / 2) - 0.5f,
+                                     _s.pos().y() - _s.size().h());
+                break;
+            case dir::down:
+                res = SDL_RenderLine(_renderer,
+                                     _s.pos().x() + (_s.size().w() / 2) - 0.5f,
+                                     _s.pos().y() + _s.size().h(),
+                                     _s.pos().x() + (_s.size().w() / 2) - 0.5f,
+                                     _s.pos().y() + (_s.size().h() * 2));
+                break;
+            case dir::left:
+                res = SDL_RenderLine(_renderer,
+                                     _s.pos().x(),
+                                     _s.pos().y() + (_s.size().h() / 2) - 0.5f,
+                                     _s.pos().x() - _s.size().w(),
+                                     _s.pos().y() + (_s.size().h() / 2) - 0.5f);
+                break;
+            case dir::right:
+                res = SDL_RenderLine(_renderer,
+                                     _s.pos().x() + _s.size().w(),
+                                     _s.pos().y() + (_s.size().h() / 2) - 0.5f,
+                                     _s.pos().x() + (_s.size().w() * 2),
+                                     _s.pos().y() + (_s.size().h() / 2) - 0.5f);
+                break;
+            default:
+                res = 0;
+                break;
+        }
+
+        return (res == 0);
+    }
+
     snake::snake(const s2::size<float>& _size,
                  const s2::pos<float>& _pos,
                  const s2::dir _dir,
@@ -48,8 +94,8 @@ namespace s2 {
 
         const SDL_FRect head = {_pos.x(), _pos.y(), _size.w(), _size.h()};
         if(SDL_RenderFillRect(_renderer, &head) < 0) return false;
+        if(!draw_dir(_renderer, *this)) return false;
 
-        
         return true;
     }
 
