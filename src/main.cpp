@@ -11,10 +11,10 @@
 
 int main() {
     const std::string title = "Snake 2";
-    constexpr int width = 800;
-    constexpr int height = 600;
+    const s2::size<float> cell(16.0f);
+    constexpr int scale = 4;
 
-    s2::window win(title, width, height);
+    s2::window win(title, cell.w() * (16 * scale), cell.h() * (9 * scale));  
     if(!win.create()) return 1;
     if(!win.show()) return 1;
 
