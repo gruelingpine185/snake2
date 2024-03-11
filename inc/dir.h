@@ -6,7 +6,6 @@ namespace s2 {
 
 
     enum class dir {
-        random,
         up,
         down,
         left,
