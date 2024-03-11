@@ -31,12 +31,12 @@ namespace s2 {
     }
 
     template <typename T>
-    void pos<T>::set_x(const T _x) const noexcept {
+    void pos<T>::set_x(const T _x) noexcept {
         this->_x = _x;
     }
     
     template <typename T>
-    void pos<T>::set_y(const T _y) const noexcept {
+    void pos<T>::set_y(const T _y) noexcept {
         this->_y = _y;
     }
 

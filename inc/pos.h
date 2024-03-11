@@ -23,8 +23,8 @@ namespace s2 {
 
         T x() const noexcept;
         T y() const noexcept;
-        void set_x(const T _x) const noexcept;
-        void set_y(const T _y) const noexcept;
+        void set_x(const T _x) noexcept;
+        void set_y(const T _y) noexcept;
 
         pos& operator= (const pos& _pos) noexcept;
         pos& operator+= (const pos& _r) noexcept;
