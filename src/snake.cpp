@@ -16,4 +16,24 @@ namespace s2 {
         _len(_len), _vel(_vel), _segments{} {}
 
     snake::~snake() noexcept {}
+
+    s2::size<float> snake::size() const noexcept {
+        return this->_size;
+    }
+
+    pos<float> snake::pos() const noexcept {
+        return this->_pos;
+    }
+
+    s2::dir snake::dir() const noexcept {
+        return this->_dir;
+    }
+
+    float snake::vel() const noexcept {
+        return this->_vel;
+    }
+
+    std::uint32_t snake::len() const noexcept {
+        return this->_len;
+    }
 }

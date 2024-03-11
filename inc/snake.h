@@ -25,6 +25,12 @@ namespace s2 {
               const std::uint32_t _len,
               const float _vel) noexcept;
         ~snake() noexcept;
+
+        s2::size<float> size() const noexcept;
+        pos<float> pos() const noexcept;
+        s2::dir dir() const noexcept;
+        float vel() const noexcept;
+        std::uint32_t len() const noexcept;
     private:
         s2::size<float> _size;
         s2::pos<float> _pos;
