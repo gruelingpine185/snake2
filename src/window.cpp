@@ -40,7 +40,7 @@ namespace s2 {
         this->_window = SDL_CreateWindow(this->_title.c_str(),
                                          this->_width,
                                          this->_height,
-                                         SDL_WINDOW_HIDDEN);
+                                         SDL_WINDOW_FULLSCREEN);
         if(!this->_window) return false;
 
         this->_renderer = SDL_CreateRenderer(this->_window,
