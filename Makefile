@@ -1,6 +1,7 @@
 inc_dir := inc
 src_dir := src
 bin_dir := bin
+vnd_dir := vendor
 
 project_name := snake2
 project := $(bin_dir)/$(project_name)
@@ -18,11 +19,15 @@ CXX ?= clang
 CXXFLAGS := $(strip $(cpp_std) $(cpp_opt) $(cpp_wrn) $(cpp_inc) $(cpp_def))
 
 
-.PHONY: all clean
+.PHONY: all clean sdl3
 all:
 	@$(MAKE) $(project) 
 clean:
 	-rm -rf $(bin_dir)
+sdl3:
+	cd $(vnd_dir)/sdl3; \
+	cmake -S . -B build; \
+	cmake --build build && cmake --install build
 
 $(project): $(cpp_objects)
 	$(CXX) $(CXXFLAGS) -Wl,-rpath,/usr/local/lib $^ -o $@ -lSDL3
