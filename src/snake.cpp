@@ -59,7 +59,10 @@ namespace s2 {
                  const std::uint32_t _len,
                  const float _vel) noexcept:
         _size(_size), _pos(_pos), _dir(_dir),
-        _len(_len), _vel(_vel), _segments{} {}
+        _len(_len), _vel(_vel), _segments{} {
+        this->_segments.push_back({this->_pos.x(), this->_pos.y() + this->_size.h()});
+        this->_segments.push_back({this->_segments[0].x(), this->_segments[0].y() + (this->_size.h() * this->_len)});
+    }
 
     snake::~snake() noexcept {}
 
@@ -88,12 +91,23 @@ namespace s2 {
     }
 
     bool snake::render(SDL_Renderer* _renderer) const noexcept {
+        SDL_FRect rect = {
+            this->_segments[0].x(),
+            this->_segments[0].y(),
+            this->_size.w(),
+            this->_size.h()
+        };
+
+        SDL_SetRenderDrawColor(_renderer, 0xff, 0x00, 0x00, 0xff);
+        SDL_RenderFillRect(_renderer, &rect);
+
+        const SDL_FRect head = {_pos.x(), _pos.y(), _size.w(), _size.h()};
         if(SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0xff, 0xff) < 0) {
             return false;
         }
 
-        const SDL_FRect head = {_pos.x(), _pos.y(), _size.w(), _size.h()};
         if(SDL_RenderFillRect(_renderer, &head) < 0) return false;
+
         if(!draw_dir(_renderer, *this)) return false;
 
         return true;
@@ -107,6 +121,8 @@ namespace s2 {
             this->_size.h() * this->_vel
         };
 
+        this->_segments[0].set_x(this->_pos.x());
+        this->_segments[0].set_y(this->_pos.y()); 
         switch(this->_dir) {
             case dir::up:
                 next_pos.set_x(0.0f);
@@ -133,7 +149,7 @@ namespace s2 {
         return this->_size;
     }
 
-    const pos<float> snake::pos() const noexcept {
+    const s2::pos<float> snake::pos() const noexcept {
         return this->_pos;
     }
 

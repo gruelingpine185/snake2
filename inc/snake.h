@@ -2,7 +2,7 @@
 
 
 #include <cstdint>
-#include <array>
+#include <vector>
 
 #include "pos.h"
 #include "size.h"
@@ -16,6 +16,9 @@ namespace s2 {
     class snake;
     enum class dir;
 
+    struct segment {
+        s2::pos<float> pos;
+    };
 
     class snake {
     public:
@@ -30,7 +33,7 @@ namespace s2 {
         bool render(SDL_Renderer* _renderer) const noexcept;
         void update(const float _dt) noexcept;
         const s2::size<float> size() const noexcept;
-        const pos<float> pos() const noexcept;
+        const s2::pos<float> pos() const noexcept;
         s2::dir dir() const noexcept;
         float vel() const noexcept;
         std::uint32_t len() const noexcept;
@@ -40,6 +43,6 @@ namespace s2 {
         s2::dir _dir;
         std::uint32_t _len;
         float _vel;
-        std::array<s2::pos<float>, 32> _segments;
+        std::vector<s2::pos<float>> _segments;
     };
 }
