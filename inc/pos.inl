@@ -41,7 +41,7 @@ namespace s2 {
     }
 
     template <typename T>
-    pos<T>& pos<T>::operator= (const pos& _pos) noexcept {
+    pos<T>& pos<T>::operator= (const pos<T>& _pos) noexcept {
         if(*this == _pos) return *this;
 
         this->_x = _pos._x;
@@ -50,14 +50,24 @@ namespace s2 {
     }
 
     template <typename T>
-    pos<T>& pos<T>::operator+= (const pos& _r) noexcept {
+    bool operator== (const pos<T>& _l, const pos<T>& _r) noexcept {
+        return ((_l.x() == _r.x()) && (_l.y() == _r.y()));
+    }
+
+    template <typename T>
+    bool operator!= (const pos<T>& _l, const pos<T>& _r) noexcept {
+        return (!(_l == _r));
+    }
+
+    template <typename T>
+    pos<T>& pos<T>::operator+= (const pos<T>& _r) noexcept {
         this->_x += _r._x;
         this->_y += _r._y;
         return *this;
     }
 
     template <typename T>
-    pos<T>& pos<T>::operator-= (const pos& _r) noexcept {
+    pos<T>& pos<T>::operator-= (const pos<T>& _r) noexcept {
         this->_x -= _r._x;
         this->_y -= _r._y;
         return *this;
