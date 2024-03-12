@@ -29,8 +29,8 @@ namespace s2 {
         void handle_events(const SDL_Event& _event) noexcept;
         bool render(SDL_Renderer* _renderer) const noexcept;
         void update(const float _dt) noexcept;
-        s2::size<float> size() const noexcept;
-        pos<float> pos() const noexcept;
+        const s2::size<float> size() const noexcept;
+        const pos<float> pos() const noexcept;
         s2::dir dir() const noexcept;
         float vel() const noexcept;
         std::uint32_t len() const noexcept;

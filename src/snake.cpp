@@ -129,11 +129,11 @@ namespace s2 {
         }
     }
 
-    s2::size<float> snake::size() const noexcept {
+    const s2::size<float> snake::size() const noexcept {
         return this->_size;
     }
 
-    pos<float> snake::pos() const noexcept {
+    const pos<float> snake::pos() const noexcept {
         return this->_pos;
     }
 
