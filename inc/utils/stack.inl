@@ -4,11 +4,11 @@
 namespace s2 {    
     template <typename T, std::size_t N>
     stack<T, N>::stack(const stack<T, N>& _stack) noexcept:
-        _top(_stack._top), _data(_stack._data) {}
+        _data(_stack._data), _top(nullptr) {}
 
     template <typename T, std::size_t N>
     stack<T, N>::stack() noexcept:
-        _top(nullptr), _data{} {}
+        _data{}, _top(nullptr) {}
 
     template <typename T, std::size_t N>
     stack<T, N>::~stack() noexcept {}
@@ -16,8 +16,9 @@ namespace s2 {
     template <typename T, std::size_t N>
     bool stack<T, N>::push(const T& _data) noexcept {
         if(this->is_full()) return false;
+        if(this->is_empty()) this->_top = &this->_data[0];
 
-        this->_data[this->top++] = _data;
+        *(this->_top++) = _data;
         return true;
     }
 
@@ -34,7 +35,7 @@ namespace s2 {
 
     template <typename T, std::size_t N>
     T& stack<T, N>::top() noexcept {
-        return *this->_top;
+        return *(this->_top - 1);
     }
 
     template <typename T, std::size_t N>
