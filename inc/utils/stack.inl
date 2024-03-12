@@ -6,6 +6,7 @@ namespace s2 {
     stack<T, N>::stack(const stack<T, N>& _stack) noexcept:
         _data(_stack._data), _top(nullptr) {}
 
+namespace s2 {
     template <typename T, std::size_t N>
     stack<T, N>::stack() noexcept:
         _data{}, _top(nullptr) {}
@@ -41,6 +42,16 @@ namespace s2 {
     template <typename T, std::size_t N>
     const T& stack<T, N>::top() const noexcept {
         return *this->_top;
+    }
+
+    template <typename T, std::size_t N>
+    T& stack<T, N>::bottom() noexcept {
+        return this->_data[0];
+    }
+
+    template <typename T, std::size_t N>
+    const T& stack<T, N>::bottom() const noexcept {
+        return this->_data[0];
     }
 
     template <typename T, std::size_t N>

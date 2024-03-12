@@ -20,6 +20,8 @@ namespace s2 {
         bool pop() noexcept;
         T& top() noexcept;
         const T& top() const noexcept;
+        T& bottom() noexcept;
+        const T& bottom() const noexcept;
         bool is_empty() const noexcept;
         bool is_full() const noexcept;
     private:
