@@ -8,8 +8,10 @@
 namespace s2 {
     game::game(const size<float>& _cell_size) noexcept:
         _rnd_device{}, _prng(_rnd_device()),
-        _snake(_cell_size, {5 * _cell_size.w(), 5 * _cell_size.h()}, static_cast<enum s2::dir>(_prng()), 3, 1.0f)
-        {}
+        _snake(_cell_size, {5 * _cell_size.w(), 5 * _cell_size.h()},
+                static_cast<dir>(std::uniform_int_distribution<int>(0, 3)(_prng)),
+                3,
+                1.0f) {}
 
     game::~game() noexcept {}
 

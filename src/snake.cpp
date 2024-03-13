@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <SDL3/SDL_render.h>
 
 #include "dir.h"
@@ -7,15 +9,20 @@
 
 
 namespace s2 {
-    static bool draw_dir(SDL_Renderer* _renderer, const snake _s);
+    static uint32_t count = 1;
+    static bool draw_dir(SDL_Renderer* _renderer, const snake& _s);
+    static pos<float> calc_next_pos(const size<float>& _size,
+                                    const pos<float>& _pos,
+                                    const dir _dir,
+                                    const float _vel);
 
 
-    static bool draw_dir(SDL_Renderer* _renderer, const snake _s) {
+    static bool draw_dir(SDL_Renderer* _renderer, const snake& _s) {
         if(SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0x00, 0xff) < 0) {
             return false;
         }
-
-        int res;
+            
+        int res = 0;
         switch(_s.dir()) {
             case dir::up:
                 res = SDL_RenderLine(_renderer,
@@ -45,13 +52,25 @@ namespace s2 {
                                      _s.pos().x() + (_s.size().w() * 2),
                                      _s.pos().y() + (_s.size().h() / 2) - 0.5f);
                 break;
-            default:
-                res = 0;
-                break;
         }
 
         return (res == 0);
     }
+
+    static pos<float> calc_next_pos(const size<float>& _size,
+                                    const pos<float>& _pos,
+                                    const dir _dir,
+                                    const float _vel) {
+        
+        pos<float> offset = {_size.w() * _vel, _size.h() * _vel};
+        (is_direction_on_xaxis(_dir))?
+            offset.set_y(0.0f):
+            offset.set_x(0.0f);
+        return (_dir == dir::left || _dir == dir::up)?
+            (_pos - offset):
+            (_pos + offset);
+    }
+
 
     snake::snake(const s2::size<float>& _size,
                  const s2::pos<float>& _pos,
@@ -59,47 +78,43 @@ namespace s2 {
                  const std::uint32_t _len,
                  const float _vel) noexcept:
         _size(_size), _pos(_pos), _dir(_dir),
-        _len(_len), _vel(_vel), _segments{} {
-        this->_segments.push_back({this->_pos.x(), this->_pos.y() + this->_size.h()});
-        this->_segments.push_back({this->_segments[0].x(), this->_segments[0].y() + (this->_size.h() * this->_len)});
-    }
+        _len(_len), _vel(_vel), _segments{} {}
 
     snake::~snake() noexcept {}
 
     void snake::handle_events(const SDL_Event& _event) noexcept {
         if(_event.type != SDL_EVENT_KEY_DOWN) return;
+        
         switch(_event.key.keysym.sym) {
             case SDLK_UP:
-                if(this->_dir != dir::down) this->_dir = dir::up;
-
+                if(is_direction_on_xaxis(this->_dir)) this->_dir = dir::up;
                 break;
             case SDLK_DOWN:
-                if(this->_dir != dir::up) this->_dir = dir::down;
-
+                if(is_direction_on_xaxis(this->_dir)) this->_dir = dir::down;
                 break;
             case SDLK_LEFT:
-                if(this->_dir != dir::right) this->_dir = dir::left;
-
+                if(is_direction_on_yaxis(this->_dir)) this->_dir = dir::left;
                 break;
             case SDLK_RIGHT:
-                if(this->_dir != dir::left) this->_dir = dir::right;
-
-                break;
-            default:
+                if(is_direction_on_yaxis(this->_dir)) this->_dir = dir::right;
                 break;
         }
+
+        if(count == this->_segments.size()) return;
+
+        this->_segments[count++] = this->_pos;
     }
 
     bool snake::render(SDL_Renderer* _renderer) const noexcept {
-        SDL_FRect rect = {
-            this->_segments[0].x(),
-            this->_segments[0].y(),
-            this->_size.w(),
-            this->_size.h()
-        };
-
         SDL_SetRenderDrawColor(_renderer, 0xff, 0x00, 0x00, 0xff);
-        SDL_RenderFillRect(_renderer, &rect);
+        for(size_t i = 0; i < count; i++) {
+            SDL_FRect rect;
+            rect.x = this->_segments[i].x();
+            rect.y = this->_segments[i].y();
+            rect.w = this->_size.w();
+            rect.h = this->_size.h();
+            SDL_RenderFillRect(_renderer, &rect);
+        }
 
         const SDL_FRect head = {_pos.x(), _pos.y(), _size.w(), _size.h()};
         if(SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0xff, 0xff) < 0) {
@@ -107,7 +122,6 @@ namespace s2 {
         }
 
         if(SDL_RenderFillRect(_renderer, &head) < 0) return false;
-
         if(!draw_dir(_renderer, *this)) return false;
 
         return true;
@@ -115,40 +129,21 @@ namespace s2 {
 
     void snake::update(const float _dt) noexcept {
         if(static_cast<int>(_dt) % 10) return;
-    
-        s2::pos<float> next_pos = {
-            this->_size.w() * this->_vel,
-            this->_size.h() * this->_vel
-        };
 
-        this->_segments[0].set_x(this->_pos.x());
-        this->_segments[0].set_y(this->_pos.y()); 
-        switch(this->_dir) {
-            case dir::up:
-                next_pos.set_x(0.0f);
-                this->_pos -= next_pos;
-                break;
-            case dir::down:
-                next_pos.set_x(0.0f);
-                this->_pos += next_pos;
-                break;
-            case dir::left:
-                next_pos.set_y(0.0f);
-                this->_pos -= next_pos;
-                break;
-            case dir::right:
-                next_pos.set_y(0.0f);
-                this->_pos += next_pos;
-                break;
-            default:
-                break;
-        }
+        this->_segments[0] = this->_pos;
+        this->_pos = calc_next_pos(this->_size,
+                                   this->_pos,
+                                   this->_dir,
+                                   this->_vel);
     }
 
     const s2::size<float> snake::size() const noexcept {
         return this->_size;
     }
 
+    s2::pos<float>& snake::pos() noexcept {
+        return this->_pos;
+    }
     const s2::pos<float> snake::pos() const noexcept {
         return this->_pos;
     }
