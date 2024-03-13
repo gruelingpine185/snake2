@@ -72,4 +72,14 @@ namespace s2 {
         this->_y -= _r._y;
         return *this;
     }
+
+    template <typename T>
+    pos<T> operator+ (const pos<T>& _l, const pos<T>& _r) noexcept {
+        return pos<T>(_l.x() + _r.x(), _l.y() + _r.y());
+    }
+
+    template <typename T>
+    pos<T> operator- (const pos<T>& _l, const pos<T>& _r) noexcept {
+        return pos<T>(_l.x() - _r.x(), _l.y() - _r.y());
+    }
 }

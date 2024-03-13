@@ -36,7 +36,10 @@ namespace s2 {
 
     template <typename T>
     bool operator== (const pos<T>& _l, const pos<T>& _r) noexcept;
-
     template <typename T>
     bool operator!= (const pos<T>& _l, const pos<T>& _r) noexcept;
+    template <typename T>
+    pos<T> operator+ (const pos<T>& _l, const pos<T>& _r) noexcept;
+    template <typename T>
+    pos<T> operator- (const pos<T>& _l, const pos<T>& _r) noexcept;
 }
